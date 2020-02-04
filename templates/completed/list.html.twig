@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompletedController!{% endblock %}
+
+{% block body %}
+
+    <div class="text-center">
+        <h1>You have already completed:</h1>
+    </div>
+
+    </br>
+
+    {%  for test in tests %}
+        <a href="{{ path('completed_show', {completedId:  test.getId }) }}">{{ test.getTest.getName }}</a></br>
+    {% endfor %}
+
+{% endblock %}

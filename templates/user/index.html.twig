@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AuthController!{% endblock %}
+
+{% block body %}
+
+    <div class='container text-center'>
+        <h4 class="text-center">To start a new test</h4>
+        <div class="btn-size">
+            <a href="{{ path('login') }}"><button class="btn btn-success btn-lg"> Sign In </button></a> or
+            <a href="{{ path('register') }}"><button class="btn btn-primary btn-lg btn-main-menu">Sign Up</button></a>
+        </div>
+    </div>
+{% endblock %}

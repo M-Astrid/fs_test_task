@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form action="{{ path('test_show', {id: test.id}) }}" method="post">
+        <h1>{{ test.name }}</h1>
+
+        {%  for question in questions %}
+
+            <h3>
+                {{ question.text }}
+            </h3>
+
+            {% if question.type.id == 1 %} {# if single choice #}
+                {% for answer in question.getAnswerItems %}
+                    <div>
+                        <input type="radio" name="{{ question.id }}" value="{{ answer.id }}"> {{ answer.text }}
+                    </div>
+                {% endfor %}
+
+            {% elseif question.type.id == 2 %} {# if multiple choice #}
+                {% for answer in question.getAnswerItems %}
+                    <div>
+                        <input type="checkbox" name="{{ question.id }}[]" value="{{ answer.id }}"> {{ answer.text }}
+                    </div>
+                {% endfor %}
+
+            {% elseif question.type.id == 3 %} {# if text answer #}
+                <input type="text" name="{{ question.id }}">
+            {% endif %}
+
+        {% endfor %}
+        </br>
+        </br>
+            {% for error_message in errors %}
+                {{ error_message }}
+            {% endfor %}
+        </br>
+        </br>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+
+    </form>
+{% endblock %}

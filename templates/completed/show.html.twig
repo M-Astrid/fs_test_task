@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompletedController!{% endblock %}
+
+{% block body %}
+
+    <div class="text-center">
+        <h1>{{ test.name }}</h1>
+    </div>
+
+    </br>
+
+    {%  for question in questions %}
+        {% set quest_id = question.id %}
+<div class="question-container">
+    <div class="question-text">
+        <h3>
+            {{ question.text }}
+        </h3>
+    </div>
+
+        {% if question.type.id == 3 %} {# if text answer #}
+            <ul class="list-group answer-group">
+                <li class="list-group-item
+                {% if results[question.id][0] == false %}
+                    list-group-item-danger
+                    ">You answered: {{ results[question.id].user_answer }}</li>
+                     <div class="correct-answer">
+                         Correct answer: {{ results[question.id].right_answer }}
+                     </div>
+                {% else %}
+                    list-group-item-success
+                    "> You answered: {{ results[question.id].user_answer }} </li>
+                {% endif %}
+
+            </ul>
+        {% else %} {# if choice #}
+    <ul class="list-group answer-group">
+            {% for answer in question.getAnswerItems %}
+                {% if results[question.id][answer.id] is defined %}
+                    {% if results[question.id][answer.id] != true  %}
+                        <li class="list-group-item list-group-item-danger">{{ answer.text }}</li>
+                    {% else %}
+                        <li class="list-group-item list-group-item-success">{{ answer.text }}</li>
+                    {% endif %}
+                {% else %}
+                    <li class="list-group-item">{{ answer.text }}</li>
+                {% endif %}
+            {% endfor %}
+
+            {% if results[question.id].right_answers is defined %}
+                <div class="correct-answer">
+                    Correct:
+                    <div class="correct-answer-list">
+                        {% for item in results[question.id].right_answers %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+                </ul>
+    </div>
+    {% endfor %}
+    <div class="text-center">
+        <h4> Total score: {{ rightAnswers }}/{{ totalQuestions }} </h4>
+        <a href="{{ path('main') }}"><h4> To main </h4></a>
+    </div>
+{% endblock %}
